@@ -6,5 +6,5 @@ app.listen(8080, function() {
 })
 
 app.get('/', function(req, res) {
-    res.send("Hello wolrd !!")
+    res.sendFile(__dirname + '/index.html')
 })
