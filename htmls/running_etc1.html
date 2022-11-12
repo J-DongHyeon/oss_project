@@ -153,8 +153,8 @@
       <script>
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
             mapOption = { 
-                center: new kakao.maps.LatLng(37.87382615598187, 127.71309556193293), // 지도의 중심좌표
-                level: 3 // 지도의 확대 레벨
+                center: new kakao.maps.LatLng(37.8570644143967, 127.69728141084235), // 지도의 중심좌표
+                level: 6 // 지도의 확대 레벨
             };
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -165,13 +165,21 @@
         var clickLine; // 마우스로 클릭한 좌표로 그려질 선 객체입니다
         var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
         var dots = []; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
+
+        var overlayFlag = true; // 거리정보 오버레이를 표시할지 말지 상태를 가지고 있을 변수입니다.
           
         
         
         // --------------초기 지도에 경로 표시하기----------------
-        var start_latlngs = [new kakao.maps.LatLng(37.87382615598187, 127.71309556193293),
-                            new kakao.maps.LatLng(37.8730096748559, 127.71030313833738),
-                            new kakao.maps.LatLng(37.87362307960051, 127.71315611522901)];
+        var start_latlngs = [new kakao.maps.LatLng(37.87341219761306, 127.71152880368315),
+                            new kakao.maps.LatLng(37.872204001385086, 127.70869856390345),
+                            new kakao.maps.LatLng(37.868540431563, 127.70666325948568),
+                            new kakao.maps.LatLng(37.87189910703922, 127.69942151194337),
+                            new kakao.maps.LatLng(37.87013551233077, 127.6929494677985),
+                            new kakao.maps.LatLng(37.8617774478456, 127.69250755949406),
+                            new kakao.maps.LatLng(37.85788883074562, 127.69192574178021),
+                            new kakao.maps.LatLng(37.85358588627002, 127.68824950464611),
+                            new kakao.maps.LatLng(37.84577664402015, 127.69253967589775)];
 
         // 초기 경로의 첫 지점만 path로 넣어줍니다.
         clickLine = new kakao.maps.Polyline({
@@ -190,15 +198,18 @@
         for (var i=1; i<start_latlngs.length; i++) {
           var path = clickLine.getPath();
           path.push(start_latlngs[i]);
-          clickLine.setPath(path);
-
-          var distance = Math.round(clickLine.getLength());
+          clickLine.setPath(path);          
 
           // 초기 경로의 첫 지점과 마지막 지점을 제외하고는 누적 거리 정보 오버레이를 표시합니다.
-          if (i != start_latlngs.length-1) 
+          // 또한, overlayFlag 가 true 인 경우만 오버레이를 표시합니다.
+          if (i != start_latlngs.length-1 && overlayFlag) {
+            var distance = Math.round(clickLine.getLength());
             displayCircleDot(start_latlngs[i], distance);
-          else 
+          } else 
             displayCircleDot(start_latlngs[i], 0);
+
+            //overlayFlag 를 toggling 하여 거리 정보가 하나 건너 주기로 표시되도록 한다.
+            overlayFlag = !overlayFlag;
         }        
         
         var start_distance = Math.round(clickLine.getLength()), //초기 경로의 총 길이입니다.
@@ -256,18 +267,29 @@
 
                     
             } else { // 선이 그려지고 있는 상태이면
+              
+              // 그려지고 있는 선의 좌표 배열을 얻어옵니다
+              var path = clickLine.getPath();
 
-                // 그려지고 있는 선의 좌표 배열을 얻어옵니다
-                var path = clickLine.getPath();
+              // 좌표 배열에 클릭한 위치를 추가합니다
+              path.push(clickPosition);
 
-                // 좌표 배열에 클릭한 위치를 추가합니다
-                path.push(clickPosition);
+              // 다시 선에 좌표 배열을 설정하여 클릭 위치까지 선을 그리도록 설정합니다
+              clickLine.setPath(path);
+
+              if (overlayFlag) {
                 
-                // 다시 선에 좌표 배열을 설정하여 클릭 위치까지 선을 그리도록 설정합니다
-                clickLine.setPath(path);
-
                 var distance = Math.round(clickLine.getLength());
                 displayCircleDot(clickPosition, distance);
+
+              } else {
+
+                displayCircleDot(clickPosition, 0);
+              }
+
+                //overlayFlag 를 toggling 하여 거리 정보가 하나 건너 주기로 표시되도록 한다.
+                overlayFlag = !overlayFlag                 
+
             }            
         });
             
@@ -360,8 +382,8 @@
                 distanceOverlay.setPosition(position);
                 distanceOverlay.setContent(content);
                 
-            } else { // 커스텀 오버레이가 생성되지 않은 상태이면
-                
+            } else { // 커스텀 오버레이가 생성되지 않은 상태이면              
+
                 // 커스텀 오버레이를 생성하고 지도에 표시합니다
                 distanceOverlay = new kakao.maps.CustomOverlay({
                     map: map, // 커스텀오버레이를 표시할 지도입니다
@@ -428,10 +450,10 @@
 
                 // 배열에 추가합니다
                 dots.push({circle:circleOverlay, distance: distanceOverlay});
-            } else if (distance == 0) {     // distance == 0 인 경우는 도착 지점을 의미합니다.
+            } else if (distance == 0) {     // 거리 정보를 표시하고 싶지 않은 경우 distance == 0 을 입력
 
               // distance 없이 배열에 추가합니다
-              dots.push({circle:circleOverlay, distance: distanceOverlay});
+              dots.push({circle:circleOverlay, distance: null});
             }
 
             
@@ -456,7 +478,7 @@
         }
 
         // 마우스 우클릭 하여 선 그리기가 종료됐을 때 호출하여 
-        // 그려진 선의 총거리 정보와 거리에 대한 도보, 자전거 시간을 계산하여
+        // 그려진 선의 총거리 정보와 거리에 대한 도보, 뜀뛰기 시간을 계산하여
         // HTML Content를 만들어 리턴하는 함수입니다
         function getTimeHTML(distance) {
 
@@ -464,21 +486,21 @@
             var walkkTime = distance / 67 | 0;
             var walkHour = '', walkMin = '';
 
-            // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
-            if (walkkTime > 60) {
+            // 계산한 도보 시간이 60분 보다 크거나 같으면 시간으로 표시합니다
+            if (walkkTime >= 60) {
                 walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
             }
             walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
 
-            // 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
-            var bycicleTime = distance / 227 | 0;
-            var bycicleHour = '', bycicleMin = '';
+            // 뜀뛰기의 평균 시속은 8km/h 이고 이것을 기준으로 뜀뛰기의 분속은 133m/min입니다
+            var runningTime = distance / 133 | 0;
+            var runningHour = '', runningMin = '';
 
-            // 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
-            if (bycicleTime > 60) {
-                bycicleHour = '<span class="number">' + Math.floor(bycicleTime / 60) + '</span>시간 '
+            // 계산한 자전거 시간이 60분 보다 크거나 같으면 시간으로 표출합니다
+            if (runningTime >= 60) {
+                runningHour = '<span class="number">' + Math.floor(runningTime / 60) + '</span>시간 '
             }
-            bycicleMin = '<span class="number">' + bycicleTime % 60 + '</span>분'
+            runningMin = '<span class="number">' + runningTime % 60 + '</span>분'
 
             // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
             var content = '<ul class="dotOverlay distanceInfo">';
@@ -492,7 +514,7 @@
             content += '        <span class="label">도보</span>' + walkHour + walkMin;
             content += '    </li>';
             content += '    <li>';
-            content += '        <span class="label">자전거</span>' + bycicleHour + bycicleMin;
+            content += '        <span class="label">뜀뛰기</span>' + runningHour + runningMin;
             content += '    </li>';
             content += '</ul>'
 
