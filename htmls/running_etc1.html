@@ -11,7 +11,7 @@
             background-image: linear-gradient(
                             rgba(0, 0, 0, 0.5),
                             rgba(0, 0, 0, 0.5)
-                            ), url('https://t1.daumcdn.net/cfile/tistory/995D7C485E229FDE1C');
+                            ), url("running_bg.PNG");
             background-repeat : no-repeat;
             background-size : cover;
         }
@@ -153,7 +153,7 @@
       <script>
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
             mapOption = { 
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                center: new kakao.maps.LatLng(37.87382615598187, 127.71309556193293), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };
 
@@ -167,11 +167,11 @@
         var dots = []; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
           
         
-
+        
         // --------------초기 지도에 경로 표시하기----------------
-        var start_latlngs = [new kakao.maps.LatLng(33.450701, 126.570667),
-                            new kakao.maps.LatLng(33.451301, 126.570867),
-                            new kakao.maps.LatLng(33.450001, 126.570967)];
+        var start_latlngs = [new kakao.maps.LatLng(37.87382615598187, 127.71309556193293),
+                            new kakao.maps.LatLng(37.8730096748559, 127.71030313833738),
+                            new kakao.maps.LatLng(37.87362307960051, 127.71315611522901)];
 
         // 초기 경로의 첫 지점만 path로 넣어줍니다.
         clickLine = new kakao.maps.Polyline({
@@ -184,7 +184,7 @@
         });
 
         // 초기 경로의 첫 지점에 dot 오버레이를 표시합니다.
-        displayCircleDot(start_latlngs[0], 0);
+        displayCircleDot(start_latlngs[0], -1);
         
         // 초기 경로의 첫 지점 이후 각 지점에 dot 오버레이를 표시합니다.
         for (var i=1; i<start_latlngs.length; i++) {
@@ -252,7 +252,7 @@
                 });
             
                 // 클릭한 지점에 대한 정보를 지도에 표시합니다
-                displayCircleDot(clickPosition, 0);
+                displayCircleDot(clickPosition, -1);
 
                     
             } else { // 선이 그려지고 있는 상태이면
@@ -413,10 +413,25 @@
                 // 배열에 추가합니다
                 dots.push({circle:circleOverlay, distance: distanceOverlay});
 
-            } else {      // 길이를 입력하지 않은 경우,
+            } else if (distance == -1) {      // distance == -1 인 경우는 출발 지점을 의미합니다.
 
-                // distance 없이 배열에 추가합니다
-                dots.push({circle:circleOverlay, distance: null});
+              // "출발" 텍스트를 표시할 커스텀 오버레이를 생성합니다.
+              var distanceOverlay = new kakao.maps.CustomOverlay({
+                    content: '<div class="dotOverlay fs-5 fw-bold">출발</div>',
+                    position: position,
+                    yAnchor: 1,
+                    zIndex: 2
+                });
+
+                // 지도에 표시합니다
+                distanceOverlay.setMap(map);
+
+                // 배열에 추가합니다
+                dots.push({circle:circleOverlay, distance: distanceOverlay});
+            } else if (distance == 0) {     // distance == 0 인 경우는 도착 지점을 의미합니다.
+
+              // distance 없이 배열에 추가합니다
+              dots.push({circle:circleOverlay, distance: distanceOverlay});
             }
 
             
@@ -467,6 +482,9 @@
 
             // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
             var content = '<ul class="dotOverlay distanceInfo">';
+            content += '    <li>';
+            content += '        <span class="label fs-5 fw-bold">도착</span><span class="number">';
+            content += '    </li>';
             content += '    <li>';
             content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
             content += '    </li>';

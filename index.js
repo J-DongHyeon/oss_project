@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
 
+app.use(express.static('imgs'));
+// express 에서 imgs 내의 파일들을 사용하기 위함
+
 app.listen(8080, function() {
     console.log("listening  on 8080")
 })
