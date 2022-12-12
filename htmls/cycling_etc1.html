@@ -533,25 +533,15 @@
         // HTML Content를 만들어 리턴하는 함수입니다
         function getTimeHTML(distance) {
 
-            // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
-            var walkkTime = distance / 67 | 0;
-            var walkHour = '', walkMin = '';
+            // 자전거의 시속은 평균 17km/h 이고 자전거의 분속은 283m/min입니다
+            var cycleTime = distance / 283 | 0;
+            var cycleHour = '', cycleMin = '';
 
             // 계산한 도보 시간이 60분 보다 크거나 같으면 시간으로 표시합니다
-            if (walkkTime >= 60) {
-                walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
+            if (cycleTime >= 60) {
+                cycleHour = '<span class="number">' + Math.floor(cycleTime / 60) + '</span>시간 '
             }
-            walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
-
-            // 뜀뛰기의 평균 시속은 8km/h 이고 이것을 기준으로 뜀뛰기의 분속은 133m/min입니다
-            var runningTime = distance / 133 | 0;
-            var runningHour = '', runningMin = '';
-
-            // 계산한 자전거 시간이 60분 보다 크거나 같으면 시간으로 표출합니다
-            if (runningTime >= 60) {
-                runningHour = '<span class="number">' + Math.floor(runningTime / 60) + '</span>시간 '
-            }
-            runningMin = '<span class="number">' + runningTime % 60 + '</span>분'
+            cycleMin = '<span class="number">' + cycleTime % 60 + '</span>분'
 
             // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
             var content = '<ul class="dotOverlay distanceInfo">';
@@ -562,10 +552,7 @@
             content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
             content += '    </li>';
             content += '    <li>';
-            content += '        <span class="label">도보</span>' + walkHour + walkMin;
-            content += '    </li>';
-            content += '    <li>';
-            content += '        <span class="label">뜀뛰기</span>' + runningHour + runningMin;
+            content += '        <span class="label">자전거</span>' + cycleHour + cycleMin;
             content += '    </li>';
             content += '</ul>'
 

@@ -122,11 +122,12 @@
                 <br><br>
               </div>        
               <div class="fs-4 text-white">
-                공지천교 ~ 의암댐 ~ 서면 ~ 소양댐 ~ 공지천교 <br>
-                난이도 : 하 <br><br>
-                춘천의 자연 경관을 모두 둘러볼 수 있는 사이클 45 KM 코스입니다. <br>
-                공지천에서 출발하여 의암댐, 서면을 돌면서 춘천의 의암호를 모두 둘러볼 수 있고, 소양댐을 돌아 공지천으로 돌아오면서 소양강 경관을 감상하며 라이딩할 수 있는 코스입니다. <br>
-                모든 코스에서 오르막길 없이 완만한 경사이기 때문에 부담없이 초보자도 즐길 수 있는 코스입니다 ! &#128513;
+                춘천 ~ 마석 <br>
+                난이도 : 중 <br><br>
+                춘천부터 마석까지 이어져 있는 사이클 60 KM 코스입니다. <br>
+                코스 전체적으로 자전거 도로가 설치되어 있어 안전하게 라이딩 할 수 있습니다. <br>
+                대성리 ~ 마석 사이에 완만한 오르막이 길게 형성되어 있으므로 적절한 페이스 조절을 하며 달리세요. <br>
+                강과 자연 사이에 설치된 자전거 도로를 달리기 때문에 멋진 경관을 보면서 라이딩을 즐길 수 있습니다 ! &#128513;
                 <br><br>              
               </div>                
      
@@ -158,8 +159,8 @@
       <script>
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
             mapOption = { 
-                center: new kakao.maps.LatLng(37.882574630971526, 127.72482539286989), // 지도의 중심좌표
-                level: 7 // 지도의 확대 레벨
+                center: new kakao.maps.LatLng(37.75118812596108, 127.53774188525982), // 지도의 중심좌표
+                level: 9 // 지도의 확대 레벨
             };
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -176,64 +177,33 @@
         
         
         // --------------초기 지도에 경로 표시하기----------------
-        var start_latlngs = [new kakao.maps.LatLng(37.87293244865356, 127.71041036919773),
-                            new kakao.maps.LatLng(37.87603693536007, 127.7035296618022),
-                            new kakao.maps.LatLng(37.872830276486475, 127.69736179401372),
-                            new kakao.maps.LatLng(37.874645214518736, 127.6951512100673),
-                            new kakao.maps.LatLng(37.87146615784574, 127.69034791271207),
-                            new kakao.maps.LatLng(37.86324556039596, 127.69104397306116),
-                            new kakao.maps.LatLng(37.859940959129396, 127.68919495254632),
-                            new kakao.maps.LatLng(37.8538406513791, 127.68472946909242),
-                            new kakao.maps.LatLng(37.85282027743204, 127.68667437062166),
-                            new kakao.maps.LatLng(37.85027736179972, 127.68396934205421),
-                            new kakao.maps.LatLng(37.84856976642161, 127.68013600716276),
-                            new kakao.maps.LatLng(37.84671169086793, 127.68361828289869),
-                            new kakao.maps.LatLng(37.8459181172401, 127.68374729319224),
-                            new kakao.maps.LatLng(37.84608265578349, 127.6802267766542),
-                            new kakao.maps.LatLng(37.84238762113637, 127.67730718302388),
-                            new kakao.maps.LatLng(37.83773902390748, 127.67726467417135),
-                            new kakao.maps.LatLng(37.83743243120231, 127.67417192845411),
-                            new kakao.maps.LatLng(37.84417291964016, 127.67391517621331),
-                            new kakao.maps.LatLng(37.85021265519153, 127.67015250046074),
-                            new kakao.maps.LatLng(37.851072333825726, 127.67106925622683),
-                            new kakao.maps.LatLng(37.84886170989111, 127.67323069291436),
-                            new kakao.maps.LatLng(37.864063255962584, 127.67432355673472),
-                            new kakao.maps.LatLng(37.87716163157755, 127.67767094821667),
-                            new kakao.maps.LatLng(37.88551920504198, 127.68443160431673),
-                            new kakao.maps.LatLng(37.89260577549453, 127.69277351389806),
-                            new kakao.maps.LatLng(37.89731405346663, 127.69490958772505),
-                            new kakao.maps.LatLng(37.90084566593691, 127.70099153392988),
-                            new kakao.maps.LatLng(37.907182492061274, 127.70796508620768),
-                            new kakao.maps.LatLng(37.91616129931793, 127.71300940184928),
-                            new kakao.maps.LatLng(37.92192687999462, 127.71306506683017),
-                            new kakao.maps.LatLng(37.92195796297809, 127.71979821279368),
-                            new kakao.maps.LatLng(37.91645158382378, 127.71860732781506),
-                            new kakao.maps.LatLng(37.90962847970137, 127.72058776254157),
-                            new kakao.maps.LatLng(37.902863706465794, 127.7247969526493),
-                            new kakao.maps.LatLng(37.89873552177438, 127.72803087380998),
-                            new kakao.maps.LatLng(37.895776153524565, 127.74028025448972),
-                            new kakao.maps.LatLng(37.89902605411668, 127.74495156304788),
-                            new kakao.maps.LatLng(37.90702777705924, 127.74471385262407),
-                            new kakao.maps.LatLng(37.91745444541073, 127.74281744143937),
-                            new kakao.maps.LatLng(37.920914345066706, 127.74276125905156),
-                            new kakao.maps.LatLng(37.92370765890297, 127.7512055984294),
-                            new kakao.maps.LatLng(37.92819475657716, 127.7706325191713),
-                            new kakao.maps.LatLng(37.92863234987992, 127.78619677219304),
-                            new kakao.maps.LatLng(37.92958242726834, 127.78961914361948),
-                            new kakao.maps.LatLng(37.92798989743089, 127.79064851260728),
-                            new kakao.maps.LatLng(37.92631703393349, 127.78753695874822),
-                            new kakao.maps.LatLng(37.92577568573797, 127.77133518082685),
-                            new kakao.maps.LatLng(37.921408701335984, 127.75004491738106),
-                            new kakao.maps.LatLng(37.91400264633715, 127.74728596398097),
-                            new kakao.maps.LatLng(37.90739645111314, 127.74908395165352),
-                            new kakao.maps.LatLng(37.89996026602456, 127.75105510893579),
-                            new kakao.maps.LatLng(37.89181775355658, 127.73937661606084),
-                            new kakao.maps.LatLng(37.8937677647235, 127.72716339816172),
-                            new kakao.maps.LatLng(37.89250743264699, 127.72114842600475),
-                            new kakao.maps.LatLng(37.8846034430886, 127.71124998722709),
-                            new kakao.maps.LatLng(37.87676997230345, 127.70749203831612),
-                            new kakao.maps.LatLng(37.87353653448846, 127.71182550530862)];
-
+        var start_latlngs = [new kakao.maps.LatLng(37.87282434310413, 127.71040933104949),
+                            new kakao.maps.LatLng(37.86137411983522, 127.69061740335526),
+                            new kakao.maps.LatLng(37.846603848020926, 127.68357184133802),
+                            new kakao.maps.LatLng(37.83743217108114, 127.67421736642002),
+                            new kakao.maps.LatLng(37.81589500932719, 127.63284170334093),
+                            new kakao.maps.LatLng(37.815803454453345, 127.63311348473475),
+                            new kakao.maps.LatLng(37.83014478177891, 127.595433261439540),
+                            new kakao.maps.LatLng(37.8452701462157, 127.54551951175694),
+                            new kakao.maps.LatLng(37.82473002728716, 127.5213343060069),
+                            new kakao.maps.LatLng(37.81715523170377, 127.51469393653714),
+                            new kakao.maps.LatLng(37.810215885839256, 127.49840668636585),
+                            new kakao.maps.LatLng(37.80221406973421, 127.48579452476667),
+                            new kakao.maps.LatLng(37.79435491012452, 127.47878899070146),
+                            new kakao.maps.LatLng(37.776928885183565, 127.46569112867188),
+                            new kakao.maps.LatLng(37.77204390713826, 127.45694355371494),
+                            new kakao.maps.LatLng(37.763078979947004, 127.44527856240819),
+                            new kakao.maps.LatLng(37.74496793862386, 127.43610454185729),
+                            new kakao.maps.LatLng(37.73509233912503, 127.42902433650023),
+                            new kakao.maps.LatLng(37.733317906022265, 127.42140208923887),
+                            new kakao.maps.LatLng(37.73249017607462, 127.40827221372712),
+                            new kakao.maps.LatLng(37.72457792485189, 127.40878458236472),
+                            new kakao.maps.LatLng(37.71768945396729, 127.40240660796599),
+                            new kakao.maps.LatLng(37.699307953693996, 127.38677265946214),
+                            new kakao.maps.LatLng(37.67671361840091, 127.37497960299447),
+                            new kakao.maps.LatLng(37.66302691031494, 127.36082309249248),
+                            new kakao.maps.LatLng(37.65174808825335, 127.32303334474206),
+                            new kakao.maps.LatLng(37.65203102505742, 127.31163464607553)];
 
         // 초기 경로의 첫 지점만 path로 넣어줍니다.
         clickLine = new kakao.maps.Polyline({
@@ -533,44 +503,31 @@
         // HTML Content를 만들어 리턴하는 함수입니다
         function getTimeHTML(distance) {
 
-            // 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
-            var walkkTime = distance / 67 | 0;
-            var walkHour = '', walkMin = '';
+              // 자전거의 시속은 평균 17km/h 이고 자전거의 분속은 283m/min입니다
+              var cycleTime = distance / 283 | 0;
+              var cycleHour = '', cycleMin = '';
 
-            // 계산한 도보 시간이 60분 보다 크거나 같으면 시간으로 표시합니다
-            if (walkkTime >= 60) {
-                walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + '</span>시간 '
-            }
-            walkMin = '<span class="number">' + walkkTime % 60 + '</span>분'
+              // 계산한 도보 시간이 60분 보다 크거나 같으면 시간으로 표시합니다
+              if (cycleTime >= 60) {
+                  cycleHour = '<span class="number">' + Math.floor(cycleTime / 60) + '</span>시간 '
+              }
+              cycleMin = '<span class="number">' + cycleTime % 60 + '</span>분'
 
-            // 뜀뛰기의 평균 시속은 8km/h 이고 이것을 기준으로 뜀뛰기의 분속은 133m/min입니다
-            var runningTime = distance / 133 | 0;
-            var runningHour = '', runningMin = '';
+              // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
+              var content = '<ul class="dotOverlay distanceInfo">';
+              content += '    <li>';
+              content += '        <span class="label fs-5 fw-bold">도착</span><span class="number">';
+              content += '    </li>';
+              content += '    <li>';
+              content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
+              content += '    </li>';
+              content += '    <li>';
+              content += '        <span class="label">자전거</span>' + cycleHour + cycleMin;
+              content += '    </li>';
+              content += '</ul>'
 
-            // 계산한 자전거 시간이 60분 보다 크거나 같으면 시간으로 표출합니다
-            if (runningTime >= 60) {
-                runningHour = '<span class="number">' + Math.floor(runningTime / 60) + '</span>시간 '
-            }
-            runningMin = '<span class="number">' + runningTime % 60 + '</span>분'
-
-            // 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
-            var content = '<ul class="dotOverlay distanceInfo">';
-            content += '    <li>';
-            content += '        <span class="label fs-5 fw-bold">도착</span><span class="number">';
-            content += '    </li>';
-            content += '    <li>';
-            content += '        <span class="label">총거리</span><span class="number">' + distance + '</span>m';
-            content += '    </li>';
-            content += '    <li>';
-            content += '        <span class="label">도보</span>' + walkHour + walkMin;
-            content += '    </li>';
-            content += '    <li>';
-            content += '        <span class="label">뜀뛰기</span>' + runningHour + runningMin;
-            content += '    </li>';
-            content += '</ul>'
-
-            return content;
-        }
+              return content;
+         }
 
 
       </script>
