@@ -11,10 +11,19 @@
             background-image: linear-gradient(
                             rgba(0, 0, 0, 0.5),
                             rgba(0, 0, 0, 0.5)
-                            ), url('https://t1.daumcdn.net/cfile/tistory/995D7C485E229FDE1C');
+                            ), url("skiing_bg.PNG");
             background-repeat : no-repeat;
             background-size : cover;
         }
+
+        .dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
+        .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
+        .dotOverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}    
+        .number {font-weight:bold;color:#ee6152;}
+        .dotOverlay:after {content:'';position:absolute;margin-left:-6px;left:50%;bottom:-8px;width:11px;height:8px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white_small.png')}
+        .distanceInfo {position:relative;top:5px;left:5px;list-style:none;margin:0;}
+        .distanceInfo .label {display:inline-block;width:50px;}
+        .distanceInfo:after {content:none;}
     </style>
 
 
@@ -40,10 +49,10 @@
                   Running
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/running_etc1">etc1</a></li>
-                  <li><a class="dropdown-item" href="/running_etc2">etc2</a></li>
+                  <li><a class="dropdown-item" href="/running_etc1">5 KM</a></li>
+                  <li><a class="dropdown-item" href="/running_etc2">10 KM</a></li>
                   <!-- <li><hr class="dropdown-divider"></li> -->
-                  <li><a class="dropdown-item" href="/running_etc3">etc3</a></li>
+                  <li><a class="dropdown-item" href="/running_etc3">FULL COURSE</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -51,9 +60,12 @@
                   Cycling
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/cycling_etc1">etc1</a></li>
-                  <li><a class="dropdown-item" href="/cycling_etc2">etc2</a></li>                  
-                  <li><a class="dropdown-item" href="/cycling_etc3">etc3</a></li>
+                  <li><h6 class="dropdown-header">평지 코스</h6></li>
+                  <li><a class="dropdown-item" href="/cycling_etc1">45 KM</a></li>
+                  <li><a class="dropdown-item" href="/cycling_etc2">60 KM</a></li>       
+                  <li><hr class="dropdown-divider"></li>           
+                  <li><h6 class="dropdown-header">업힐 코스</h6></li>
+                  <li><a class="dropdown-item" href="/cycling_etc3">25 KM</a></li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -61,9 +73,8 @@
                   Skiing
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/skiing_etc1">etc1</a></li>
-                  <li><a class="dropdown-item" href="/skiing_etc2">etc2</a></li>                
-                  <li><a class="dropdown-item" href="/skiing_etc3">etc3</a></li>
+                  <li><a class="dropdown-item" href="/skiing_etc1">엘리시안 강촌</a></li>
+                  <li><a class="dropdown-item" href="/skiing_etc2">비발디 파크</a></li>                                  
                 </ul>
               </li>
               <li class="nav-item">
@@ -90,80 +101,61 @@
           <a class="nav-link fs-4 fw-bold text-white" href="/skiing_etc1">Skiing</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/skiing_etc1">etc1</a>
+          <a class="nav-link" href="/skiing_etc1">엘리시안 강촌</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/skiing_etc2">etc2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/skiing_etc3">etc3</a>
+          <a class="nav-link active" aria-current="page" href="/skiing_etc2">비발디 파크</a>
         </li>
       </ul>
 
+      <br><br>
 
-      <br><br><br><br><br>
-      <h1 class="text-center text-uppercase fs-1 text-white">Leisure & Sports in Chuncheon.</h1>
-      <br><br><br><br><br>
+      <div class="row justify-content-center">
+        <div class="col-5">
+          <div class="border border-white border-5 rounded p-2 mb-2 border-opacity-50" style="width: 45rem;">
+            <div class="fs-2 fw-bold text-white text-center">
+              비발디 파크 (홍천)
+              <br>
+              <a class="btn btn-primary fs-5 fst-italic" href="https://www.sonohotelsresorts.com/vp/" role="button">
+                홈페이지 방문하기                           
+                </a> 
+                <br><br>
+            </div>        
+            <div class="fs-4 text-white">
+              많은 방문객이 붐비며 규모가 큰 비발디 파크 스키장입니다. <br>
+              슬로프의 너비가 넓기 때문에 충돌의 위험 없이 라이딩을 즐길 수 있습니다. <br>
+              또한, 스키장의 설질이 좋은 편에 속하기 때문에 미끄러짐 없이 라이딩을 즐길 수 있습니다. <br>
+              리조트 내에 많은 부대시설이 있기 때문에 가족 단위로 또는 친구들과 함께 방문하기 좋습니다 ! &#128513;
+              <br><br>       
+              평균 방문객 수 : 많음 <br>
+              평균 리프트 대기 시간 : 5 ~ 10분
+              <br><br>
+              <a class="btn btn-primary fs-5 fst-italic" href="https://www.sonohotelsresorts.com/daemyung.vp.utill.09_02_02_01.ds/dmparse.dm?areaType=S" role="button">
+              스키장 실시간 현장 웹캠 보러가기 !!                             
+              </a> 
+              <br><br>
+              스키장 가는 길 : 자차 이용 31.4 KM (50분 소요) <br><br> 
 
-
-      <div class="container">
-        <div class="row align-items-start">
-          <div class="col">
-
-          </div>
-          <div class="col">
-
-          </div>
-          <div class="col">
-
+            </div>                
+         
+            <br><br>
+            <div class="card text-bg-info mb-3 fs-4 text-white" style="max-width: 30rem;">
+              <div class="card-header">날씨</div>
+              <div class="card-body">
+                <h5 class="card-title">Info card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="row align-items-center">
-          <div class="col">
-            <div class="card">
-                <img src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/female-runner-running-at-summer-park-trail-healthy-royalty-free-image-1591373138.jpg" width=220 height=270 class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Running</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-          </div>
-          <div class="col">
-            <div class="card">
-                <img src="https://static.toiimg.com/thumb/85201540.cms?width=680&height=512&imgsize=989394" width=220 height=270 class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Cycling</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-          </div>
-          <div class="col">
-            <div class="card">
-                <img src="https://i.guim.co.uk/img/media/bed9d7978eb93d13d33a41b6f005ccae8c6dfbd6/1114_795_6348_3810/master/6348.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=26a610d76c58fe91a451fb48476a81c5" width=220 height=270 class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Skiing</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-          </div>
+        <div class="col-6 text-center">
+          <span class="badge text-bg-info fs-2 fw-bold text-white">
+            코스도              
+          </span> 
+          <br><br>
+          <img src="skiing_img4.PNG" style="width:900px;height:700px;" alt="My Image">          
         </div>
-        <div class="row align-items-end">
-          <div class="col">
-
-          </div>
-          <div class="col">
-
-          </div>
-          <div class="col">
-            
-          </div>
-        </div>
-      </div>
-
-      <br><br><br><br><br>
-
+      </div>      
+ 
   </body>
 </html>
