@@ -31,6 +31,56 @@
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
       
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <script src="/socket.io-client/dist/socket.io.js"></script>
+    <script>
+      // js 프로그램의 소켓 포트와 동일하게 해야된다.
+      var socket = io.connect('http://localhost:80');     
+
+      socket.on("weather", function(data) {
+
+        let weather = data.split(" ");
+        let PTY;
+        
+        switch (weather[0]) {
+          case '0':
+            PTY = "비/눈 없음"
+            break;
+          case '1':
+            PTY = "비"
+            break;
+          case '2':
+            PTY = "비/눈"
+            break;
+          case '3':
+            PTY = "눈"
+            break;
+          case '5':
+            PTY = "빗방울"
+            break;
+          case '6':
+            PTY = "빗방울/눈날림"
+            break;
+          case '7':
+            PTY = "눈날림"
+            break;
+        }
+
+        let REH = weather[1] + " %";
+        let T1H = weather[2] + " \'C";
+        let WSD = weather[3] + " m/s";
+
+        let today = new Date();
+        let hours = today.getHours();
+
+        if (hours == 00) hours = 23;
+        else hours -= 1;
+
+        $("#time").html(hours + " 시 기준");
+        $("#weather").html("&#9748 강수 형태 : " + PTY + "<br>&#128166 습도 : " + REH + "<br>&#127777 기온 : " + T1H + "<br>&#128168 풍속 : " + WSD);
+      });
+    </script>
 
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid top-50 start-0">
@@ -134,7 +184,7 @@
               스키장 실시간 현장 웹캠 보러가기 !!                             
               </a> 
               <br><br>
-              스키장 가는 길 : 4 정거장 이동 (20분 소요) <br><br>
+              스키장 가는 길 : 전철 이용 4 정거장 이동 (20분 소요) <br><br>
               <img src="skiing_img2.PNG" alt="My Image">
 
 
@@ -144,10 +194,10 @@
          
             <br><br>
             <div class="card text-bg-info mb-3 fs-4 text-white" style="max-width: 30rem;">
-              <div class="card-header">날씨</div>
+              <div class="card-header text-center">오늘의 날씨</div>
               <div class="card-body">
-                <h5 class="card-title">Info card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title text-dark text-center" id="time"></h5>
+                <p class="card-text" id="weather"></p>
               </div>
             </div>
           </div>
