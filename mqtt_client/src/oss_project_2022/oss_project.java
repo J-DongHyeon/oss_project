@@ -16,8 +16,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & ÇÊ¿äÇÑ ¸Ş¼Òµå Á¤ÀÇ
-	static MqttClient mqtt_client;// Mqtt Client °´Ã¼ ¼±¾ğ
+public class oss_project implements MqttCallback{ // implement callback ì¶”ê°€ & í•„ìš”í•œ ë©”ì†Œë“œ ì •ì˜
+	static MqttClient mqtt_client;// Mqtt Client ê°ì²´ ì„ ì–¸
 	
     public static void main(String[] args) {
     	oss_project obj = new oss_project();
@@ -25,9 +25,9 @@ public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & Ç
     	
     }
     public void run() {    	
-    	connectBroker(); // ºê·ÎÄ¿ ¼­¹ö¿¡ Á¢¼Ó
+    	connectBroker(); // ë¸Œë¡œì»¤ ì„œë²„ì— ì ‘ì†
     	try { 
-    		mqtt_client.subscribe("region"); // region ¸®¼Ò½º ±¸µ¶    		
+    		mqtt_client.subscribe("region"); // region ë¦¬ì†ŒìŠ¤ êµ¬ë…    		
 		} catch (MqttException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -35,16 +35,16 @@ public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & Ç
     }
     
     public void connectBroker() {
-        String broker = "tcp://127.0.0.1:1883"; // ºê·ÎÄ¿ ¼­¹öÀÇ ÁÖ¼Ò 
-        String clientId = "weather publisher"; // Å¬¶óÀÌ¾ğÆ®ÀÇ ID
+        String broker = "tcp://127.0.0.1:1883"; // ë¸Œë¡œì»¤ ì„œë²„ì˜ ì£¼ì†Œ 
+        String clientId = "weather publisher"; // í´ë¼ì´ì–¸íŠ¸ì˜ ID
         MemoryPersistence persistence = new MemoryPersistence();
         try {
-            mqtt_client = new MqttClient(broker, clientId, persistence);// Mqtt Client °´Ã¼ ÃÊ±âÈ­
-            MqttConnectOptions connOpts = new MqttConnectOptions(); // Á¢¼Ó½Ã Á¢¼ÓÀÇ ¿É¼ÇÀ» Á¤ÀÇÇÏ´Â °´Ã¼ »ı¼º
+            mqtt_client = new MqttClient(broker, clientId, persistence);// Mqtt Client ê°ì²´ ì´ˆê¸°í™”
+            MqttConnectOptions connOpts = new MqttConnectOptions(); // ì ‘ì†ì‹œ ì ‘ì†ì˜ ì˜µì…˜ì„ ì •ì˜í•˜ëŠ” ê°ì²´ ìƒì„±
             connOpts.setCleanSession(true);
             System.out.println("Connecting to broker: " + broker);
-            mqtt_client.connect(connOpts); // ºê·ÎÄ¿¼­¹ö¿¡ Á¢¼Ó
-            mqtt_client.setCallback(this);// Call back option Ãß°¡
+            mqtt_client.connect(connOpts); // ë¸Œë¡œì»¤ì„œë²„ì— ì ‘ì†
+            mqtt_client.setCallback(this);// Call back option ì¶”ê°€
             System.out.println("Connected");
         } catch(MqttException me) {
             System.out.println("reason "+me.getReasonCode());
@@ -57,13 +57,13 @@ public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & Ç
     }
     
     public void publish_data(String topic_input, String data) { 
-        String topic = topic_input; // ÅäÇÈ
+        String topic = topic_input; // í† í”½
         int qos = 1; // QoS level
         try {
         	//String sub_data = "{\"test\":10}";
             System.out.println("Publishing message: "+ data);
             
-            mqtt_client.publish(topic, data.getBytes(), qos, false); // topic, µ¥ÀÌÅÍ¸¦ byte·Î º¯È¯ÇÏ¿© Àü¼Û, qos level, retain bit
+            mqtt_client.publish(topic, data.getBytes(), qos, false); // topic, ë°ì´í„°ë¥¼ byteë¡œ ë³€í™˜í•˜ì—¬ ì „ì†¡, qos level, retain bit
             System.out.println("Message published");
         } catch(MqttException me) {
             System.out.println("reason "+me.getReasonCode());
@@ -77,14 +77,18 @@ public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & Ç
     
     public String get_weather_data(String[] lat_lng) {
     	
-    	// ÇöÀç ½Ã°£ È®ÀÎÇØ¼­ ³¯Â¥, ½Ã°£ ÀúÀå
+    	// í˜„ì¬ ì‹œê°„ í™•ì¸í•´ì„œ ë‚ ì§œ, ì‹œê°„ ì €ì¥
     	Date current = new Date(System.currentTimeMillis());
     	SimpleDateFormat d_format = new SimpleDateFormat("yyyyMMddHHmmss"); 
-    	String date = d_format.format(current).substring(0,8); // ÇöÀç ³¯Â¥
+    	String date = d_format.format(current).substring(0,8); // í˜„ì¬ ë‚ ì§œ
     	int i_date = Integer.parseInt(date);
-    	String time = d_format.format(current).substring(8, 12); // ÇöÀç ½Ã°£
+    	String time = d_format.format(current).substring(8, 12); // í˜„ì¬ ì‹œê°„
     	int i_time_h = Integer.parseInt(time.substring(0, 2));
     	
+    	/* 
+    	 * ê³µê³µë°ì´í„° ìš”ì²­ ì‹œê°„ì„ (í˜„ì¬ì‹œê°„ - 1) ì‹œê°„ìœ¼ë¡œ í•œë‹¤.
+    	 * ë„ˆë¬´ ìµœê·¼ ì‹œê°„ì˜ ê³µê³µ ë°ì´í„° ìš”ì²­ì€ ì˜¤ë¥˜ê°€ ë‚  ìˆ˜ë„ ìˆë‹¤.
+    	*/ 
     	if (time.substring(0, 2).equals("00")) {
     		i_date--;
     		date = String.valueOf(i_date);
@@ -104,41 +108,41 @@ public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & Ç
     	System.out.println("nx : " + i_nx_ny[0] + ", ny : " + i_nx_ny[1]);
     	
 
-        	String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst" // https°¡ ¾Æ´Ñ http ÇÁ·ÎÅäÄİÀ» ÅëÇØ Á¢±ÙÇØ¾ß ÇÔ.
-        			+ "?serviceKey=Lcm5d0LdcOf0ikmOlbmHQkrgM%2Fe%2Bl8laBOhOhXB4n9q8cOvOFyhnFvwKclSTvc%2BK3rll9BgV0dfGF9mdgnJGQA%3D%3D"
-        			+ "&pageNo=1&numOfRows=1000"
-        			+ "&dataType=XML"
-        			+ "&base_date="+date
-        			+ "&base_time="+time
-        			+ "&nx=" + String.valueOf(i_nx_ny[0])
-        			+ "&ny=" + String.valueOf(i_nx_ny[1]);
-    				
-        	Document doc = null;
-        	String [] weather = new String[4];
+    	String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst" // httpsê°€ ì•„ë‹Œ http í”„ë¡œí† ì½œì„ í†µí•´ ì ‘ê·¼í•´ì•¼ í•¨.
+    			+ "?serviceKey=Lcm5d0LdcOf0ikmOlbmHQkrgM%2Fe%2Bl8laBOhOhXB4n9q8cOvOFyhnFvwKclSTvc%2BK3rll9BgV0dfGF9mdgnJGQA%3D%3D"
+    			+ "&pageNo=1&numOfRows=1000"
+    			+ "&dataType=XML"
+    			+ "&base_date="+date
+    			+ "&base_time="+time
+    			+ "&nx=" + String.valueOf(i_nx_ny[0])
+    			+ "&ny=" + String.valueOf(i_nx_ny[1]);
+				
+    	Document doc = null;
+    	String [] weather = new String[4];
 
-    		// JsoupÀ¸·Î API µ¥ÀÌÅÍ °¡Á®¿À±â
-    		try {
-    			doc = Jsoup.connect(url).get();
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
+		// Jsoupìœ¼ë¡œ API ë°ì´í„° ê°€ì ¸ì˜¤ê¸°
+		try {
+			doc = Jsoup.connect(url).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-    		//¹Ş¾Æ¿Â xml API Áß ¿øÇÏ´Â µ¥ÀÌÅÍ ÃßÃâ
-    		Elements elements = doc.select("item");    		
-    		for (Element e : elements) {
-    		
-    			if (e.select("category").text().equals("PTY")) {
-    				weather[0] = e.select("obsrValue").text();
-    			} else if (e.select("category").text().equals("REH")) {
-    				weather[1] = e.select("obsrValue").text();
-    			} else if (e.select("category").text().equals("T1H")) {
-    				weather[2] = e.select("obsrValue").text();
-    			} else if (e.select("category").text().equals("WSD")) {
-    				weather[3] = e.select("obsrValue").text();
-    			}    			
-    		}    		
-    	System.out.println("PTY(°­¼ö ÇüÅÂ) : " + weather[0] + ", REH(½Àµµ) : " + weather[1] + 
-    						", T1H(±â¿Â) : " + weather[2] + ", WSD(Ç³¼Ó) : " + weather[3]); 
+		// ë°›ì•„ì˜¨ xml API ì¤‘ PTY (ê°•ìˆ˜ í˜•íƒœ), REH (ìŠµë„), T1H (ê¸°ì˜¨), WSD (í’ì†) ë°ì´í„° ì¶”ì¶œ
+		Elements elements = doc.select("item");    		
+		for (Element e : elements) {
+		
+			if (e.select("category").text().equals("PTY")) {
+				weather[0] = e.select("obsrValue").text();
+			} else if (e.select("category").text().equals("REH")) {
+				weather[1] = e.select("obsrValue").text();
+			} else if (e.select("category").text().equals("T1H")) {
+				weather[2] = e.select("obsrValue").text();
+			} else if (e.select("category").text().equals("WSD")) {
+				weather[3] = e.select("obsrValue").text();
+			}    			
+		}    		
+    	System.out.println("PTY(ê°•ìˆ˜ í˜•íƒœ) : " + weather[0] + ", REH(ìŠµë„) : " + weather[1] + 
+    						", T1H(ê¸°ì˜¨) : " + weather[2] + ", WSD(í’ì†) : " + weather[3]); 
     	System.out.println("Web Crawling Ok");
     	
     	String s_weather = String.join(" ", weather);
@@ -146,17 +150,17 @@ public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & Ç
     	return s_weather;
     }
     
-    //À§µµ, °æµµ Á¤º¸¸¦ ¹Ş¾Æ °İÀÚ x, y ÁÂÇ¥·Î º¯È¯ (¿ÀÇÂ¼Ò½º ÀÌ¿ë)
-    //°ø°ø api¸¦ ¿äÃ»ÇÒ ¶§ °İÀÚ x, y ÁÂÇ¥·Î ¿ä«ŠÇØ¾ß ÇÑ´Ù. 
+    //ìœ„ë„, ê²½ë„ ì •ë³´ë¥¼ ë°›ì•„ ê²©ì x, y ì¢Œí‘œë¡œ ë³€í™˜ (ì˜¤í”ˆì†ŒìŠ¤ ì´ìš©)
+    //ê³µê³µ apië¥¼ ìš”ì²­í•  ë•Œ ê²©ì x, y ì¢Œí‘œë¡œ ìš”ì³¥í•´ì•¼ í•œë‹¤. 
     public int[] get_xy(double[] lat_lng) {
-    	double RE = 6371.00877; // Áö±¸ ¹İ°æ(km)
-        double GRID = 5.0; // °İÀÚ °£°İ(km)
-        double SLAT1 = 30.0; // Åõ¿µ À§µµ1(degree)
-        double SLAT2 = 60.0; // Åõ¿µ À§µµ2(degree)
-        double OLON = 126.0; // ±âÁØÁ¡ °æµµ(degree)
-        double OLAT = 38.0; // ±âÁØÁ¡ À§µµ(degree)
-        double XO = 43; // ±âÁØÁ¡ XÁÂÇ¥(GRID)
-        double YO = 136; // ±âÁØÁ¡ YÁÂÇ¥(GRID)
+    	double RE = 6371.00877; // ì§€êµ¬ ë°˜ê²½(km)
+        double GRID = 5.0; // ê²©ì ê°„ê²©(km)
+        double SLAT1 = 30.0; // íˆ¬ì˜ ìœ„ë„1(degree)
+        double SLAT2 = 60.0; // íˆ¬ì˜ ìœ„ë„2(degree)
+        double OLON = 126.0; // ê¸°ì¤€ì  ê²½ë„(degree)
+        double OLAT = 38.0; // ê¸°ì¤€ì  ìœ„ë„(degree)
+        double XO = 43; // ê¸°ì¤€ì  Xì¢Œí‘œ(GRID)
+        double YO = 136; // ê¸°ì¤€ì  Yì¢Œí‘œ(GRID)
         
         double DEGRAD = Math.PI / 180.0;
         double RADDEG = 180.0 / Math.PI;
@@ -202,7 +206,7 @@ public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & Ç
 		// TODO Auto-generated method stub
 	}
 
-	//MQTT client°¡ ±¸µ¶ÇÏ°í ÀÖ´Â ÅäÇÈÀ» ¹Ş¾ÒÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+	//MQTT clientê°€ êµ¬ë…í•˜ê³  ìˆëŠ” í† í”½ì„ ë°›ì•˜ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 	@Override
 	public void messageArrived(String topic, MqttMessage msg) throws Exception {
 		// TODO Auto-generated method stub
@@ -214,7 +218,7 @@ public class oss_project implements MqttCallback{ // implement callback Ãß°¡ & Ç
 			
 			String weather = get_weather_data(lat_lng);
 		
-			// web serverÀÇ Mqtt client ·Î 'À§µµ, °æµµ, ¿Âµµ, Ç³Çâ, Ç³¼Ó, °­¼ö È®·ü' µ¥ÀÌÅÍ publish
+			// ì´ mqtt clientëŠ” 'ê°•ìˆ˜ í˜•íƒœ, ìŠµë„, ê¸°ì˜¨, í’ì†' ë°ì´í„° í† í”½ì„ publish í•œë‹¤.  			
 			try {
     			publish_data("weather", weather);
     		}catch (Exception e) {

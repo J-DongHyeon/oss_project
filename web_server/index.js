@@ -17,20 +17,28 @@ var g_socket;
 io.sockets.on('connection', function(socket) {
     g_socket = socket;
     //console.log("socket connection OK (port : 80)");
-})
+});
 
-
+/*
+mqtt 패키지를 이용하여 js 프로그램에서 mqtt 기능을 사용할 수 있도록 한다.
+local pc에서 1883 포트로 실행중인 mqtt broker (mosquitto 프로그램) 에 mqtt client 로써 연결한다.
+*/
 var mqtt = require("mqtt");
 const { stringify } = require('querystring');
 var mqtt_client = mqtt.connect("mqtt://127.0.0.1");
 
+/*
+mqtt client는 'weather' 토픽을 구독 요청한다.
+*/
 mqtt_client.on("connect", function(){
     mqtt_client.subscribe("weather");
     console.log("Subscribing Topic weather (MQTT client)");
   })
 
+/*
+'weather' 토픽 메세지를 받으면 이를 소켓 통신으로 html 페이지에 전송한다.
+*/
 mqtt_client.on("message", function(topic, message){
-
     if (topic == "weather"){
       const str = message.toString();
 
@@ -43,8 +51,13 @@ mqtt_client.on("message", function(topic, message){
     }
   }); 
 
-app.use(express.static('imgs'));
 // express 에서 imgs 내의 파일들을 사용하기 위함
+app.use(express.static('imgs'));
+
+/*
+express에서 node_modules 내의 패키지들을 참고하기 위함
+html 페이지에서 node_modules 내의 socket.io 패키지를 이용할 것이다.
+*/
 app.use(express.static('node_modules'));
 
 app.listen(8080, function() {
@@ -55,6 +68,10 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/htmls/index.html')
 })
 
+/*
+web client에서 /running_etc1 디렉토리로 get 요청을 하면, web server는 mqtt 통신으로 'region' 토픽을 전송한다.
+이때, 토픽 메세지는 'running_etc1.html' 페이지에 나와있는 마라톤 경로의 중심 위도 경도 정보이다.
+*/
 app.get('/running_etc1', function(req, res) {
     mqtt_client.publish("region", "37.87013551233077 127.6929494677985")
     res.sendFile(__dirname + '/htmls/running_etc1.html')
