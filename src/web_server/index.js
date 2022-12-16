@@ -1,8 +1,9 @@
 const express = require('express');
+const app = express();
+
+
 const socket = require('socket.io');
 const http = require('http');
-
-const app = express();
 const server = http.createServer(app);
 const io = socket.listen(server);
 server.listen(80);
@@ -19,12 +20,14 @@ io.sockets.on('connection', function(socket) {
     //console.log("socket connection OK (port : 80)");
 });
 
+
+const { stringify } = require('querystring');
+
 /*
 mqtt 패키지를 이용하여 js 프로그램에서 mqtt 기능을 사용할 수 있도록 한다.
 local pc에서 1883 포트로 실행중인 mqtt broker (mosquitto 프로그램) 에 mqtt client 로써 연결한다.
 */
 var mqtt = require("mqtt");
-const { stringify } = require('querystring');
 var mqtt_client = mqtt.connect("mqtt://127.0.0.1");
 
 /*
